@@ -18,12 +18,10 @@ class BaseBookApi:
         return self.auth_token
 
     def get(self, endpoint: str, expected: int = 200):
-        response = self.session.get(f"{self.base_url}{endpoint}")
+        response = self.session.get(self._url(endpoint))
         self._check_status(response.status_code, expected)
-        try:
-            return response.json()
-        except Exception:
-            return None
+        assert response.text, "Пустой ответ"
+        return response.json()
 
     def post(self, endpoint: str, data_json: dict, expected: int = 200):
         response = self.session.post(f"{self.base_url}{endpoint}", json=data_json)

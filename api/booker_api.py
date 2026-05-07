@@ -22,4 +22,5 @@ class BookerApi(BaseBookApi):
         self.delete(f"{BOOKING}/{booking_id}")
 
     def check_deleted(self, booking_id: int):
-        self.get(f"{BOOKING}/{booking_id}", expected=404)
+        response = self.session.get(self._url(f"{BOOKING}/{booking_id}"))
+        self._check_status(response.status_code, 404)
