@@ -12,12 +12,8 @@ class BaseBookApi:
         assert code == expected, f"Ожидали {expected}, получили {code}"
 
     def login(self):
-        response = self.session.post(
-            f"{self.base_url}{AUTH}",
-            json={"username": "admin", "password": "password123"}
-        )
-        response.raise_for_status()
-        self.auth_token = response.json()["token"]
+        data = self.post(AUTH, {"username": "admin", "password": "password123"})
+        self.auth_token = data["token"]
         self.session.headers.update({"Cookie": f"token={self.auth_token}"})
         return self.auth_token
 
