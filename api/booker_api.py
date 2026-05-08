@@ -1,5 +1,6 @@
 from api.base_book_api import BaseBookApi
 from data.booking_url_api import BOOKING
+from data.booking_url_api import BOOKING, NOT_FOUND
 
 class BookerApi(BaseBookApi):
     def __init__(self, base_url: str):
@@ -23,4 +24,7 @@ class BookerApi(BaseBookApi):
 
     def check_deleted(self, booking_id: int):
         response = self.session.get(self._url(f"{BOOKING}/{booking_id}"))
-        self._check_status(response.status_code, 404)
+        self._check_status(response.status_code, NOT_FOUND)
+
+    def assert_field(self, data: dict, field: str, expected):
+        assert data[field] == expected, f"Ожидали {field}={expected}, получили {data[field]}"

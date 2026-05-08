@@ -1,5 +1,9 @@
+import os
 import requests
+from dotenv import load_dotenv
 from data.booking_url_api import AUTH, HEADERS_DATA
+load_dotenv()
+
 
 class BaseBookApi:
     def __init__(self, base_url: str):
@@ -12,7 +16,8 @@ class BaseBookApi:
         assert code == expected, f"Ожидали {expected}, получили {code}"
 
     def login(self):
-        data = self.post(AUTH, {"username": "admin", "password": "password123"})
+        data = self.post(AUTH, {"username": os.getenv("BOOKER_NAME"),
+                                "password": os.getenv("BOOKER_PASSWORD")})
         self.auth_token = data["token"]
         self.session.headers.update({"Cookie": f"token={self.auth_token}"})
         return self.auth_token
