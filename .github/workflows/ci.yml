@@ -9,69 +9,6 @@ on:
   schedule:
     - cron: '0 7 * * *'
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Install Allure
-        run: |
-          wget -q https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz
-          tar -zxf allure-2.27.0.tgz
-          sudo mv allure-2.27.0 /opt/allure
-          sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
-
-      - name: Run tests
-        env:
-          BOOKER_NAME: ${{ secrets.BOOKER_NAME }}
-          BOOKER_PASSWORD: ${{ secrets.BOOKER_PASSWORD }}
-        run: pytest test_e2e.py -v --alluredir=allure-results
-
-      - name: Generate Allure report
-        if: always()
-        run: allure generate allure-results --clean -o allure-report
-
-      - name: Upload Allure report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-report
-          path: allure-report
-
-      - name: Notify Telegram on success
-        if: success()
-        run: |
-          curl -s -X POST https://api.telegram.org/bot${{ secrets.CI }}/sendMessage \
-          -d chat_id=${{ secrets.USER }} \
-          -d text="✅ CI passed: booker_api — все тесты прошли! Отчёт: https://github.com/Zara-Ashi/-booker_api/actions/runs/${{ github.run_id }}"
-
-      - name: Notify Telegram on failure
-        if: failure()
-        run: |
-          curl -s -X POST https://api.telegram.org/bot${{ secrets.CI }}/sendMessage \
-          -d chat_id=${{ secrets.USER }} \
-          -d text="❌ CI failed: booker_api — тесты упалname: CI - Run API Tests
-
-on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main, develop ]
-  workflow_dispatch:
-  schedule:
-    - cron: '0 7 * * *'
-
 permissions:
   contents: write
 
@@ -128,4 +65,4 @@ jobs:
         run: |
           curl -s -X POST https://api.telegram.org/bot${{ secrets.CI }}/sendMessage \
           -d chat_id=${{ secrets.USER }} \
-          -d text="❌ CI failed: booker_api — тесты упали! Отчёт: https://zara-ashi.github.io/-booker_api/index.html"! Отчёт: https://github.com/Zara-Ashi/-booker_api/actions/runs/${{ github.run_id }}"
+          -d text="❌ CI failed: booker_api — тесты упали! Отчёт: https://zara-ashi.github.io/-booker_api/index.html"
