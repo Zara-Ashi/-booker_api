@@ -6,6 +6,8 @@ on:
   pull_request:
     branches: [ main, develop ]
   workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * *'
 
 jobs:
   test:
@@ -25,6 +27,20 @@ jobs:
 
       - name: Run tests
         env:
-          BOOKING_USERNAME: ${{ secrets.BOOKING_USERNAME }}
-          BOOKING_PASSWORD: ${{ secrets.BOOKING_PASSWORD }}
+          BOOKER_NAME: ${{ secrets.BOOKING_USERNAME }}
+          BOOKER_PASSWORD: ${{ secrets.BOOKING_PASSWORD }}
         run: pytest test_e2e.py -v
+
+      - name: Notify Telegram on success
+        if: success()
+        run: |
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage \
+          -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+          -d text="✅ CI passed: booker_api tests — все тесты прошли успешно!"
+
+      - name: Notify Telegram on failure
+        if: failure()
+        run: |
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage \
+          -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+          -d text="❌ CI failed: booker_api tests — тесты упали! Проверь GitHub Actions."
