@@ -23,7 +23,7 @@ class BookerApi(BaseBookApi):
         self.delete(f"{BOOKING}/{booking_id}")
 
     def check_deleted(self, booking_id: int):
-        response = self.session.get(self._url(f"{BOOKING}/{booking_id}"))
+        response = self.session.get(f"{self.base_url}{BOOKING}/{booking_id}")
         self._check_status(response.status_code, NOT_FOUND)
 
     def assert_field(self, data: dict, field: str, expected):
