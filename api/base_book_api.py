@@ -23,7 +23,7 @@ class BaseBookApi:
         return self.auth_token
 
     def get(self, endpoint: str, expected: int = 200):
-        response = self.session.get(self._url(endpoint))
+        response = self.session.get(f"{self.base_url}{endpoint}")
         self._check_status(response.status_code, expected)
         assert response.text, "Пустой ответ"
         return response.json()
