@@ -1,2 +1,2 @@
 "Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Mon May 25 06:59:48 UTC 2026","Mon May 25 06:59:48 UTC 2026","77","","test_e2e","TestBooker","","","test_e2e",""
+"passed","Tue May 26 10:39:08 UTC 2026","Tue May 26 10:39:09 UTC 2026","832","","test_e2e","TestBooker","","","test_e2e",""
