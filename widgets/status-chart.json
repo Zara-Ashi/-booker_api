@@ -1,1 +1,1 @@
-[{"uid":"a64f942dade8077f","name":"test_e2e","time":{"start":1779878658334,"stop":1779878659025,"duration":691},"status":"passed","severity":"normal"}]
+[{"uid":"d3a39c182e37835f","name":"Полный цикл: создание, обновление и удаление брони","time":{"start":1779945461987,"stop":1779945462824,"duration":837},"status":"passed","severity":"critical"}]
