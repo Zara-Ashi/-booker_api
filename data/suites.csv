@@ -1,5 +1,5 @@
 "Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Fri Jun 19 11:10:02 UTC 2026","Fri Jun 19 11:10:02 UTC 2026","347","","test_e2e","TestBooker","","","Полный цикл: создание, обновление и удаление брони","
+"passed","Sat Jun 20 09:55:33 UTC 2026","Sat Jun 20 09:55:33 UTC 2026","86","","test_e2e","TestBooker","","","Полный цикл: создание, обновление и удаление брони","
     Тест проверяет полный E2E цикл работы с бронированием:
     - Авторизация и получение токена
     - Создание новой брони
